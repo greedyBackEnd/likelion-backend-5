@@ -1,6 +1,7 @@
-package com.example.article;
+package com.example.article.controller;
 
 import com.example.article.dto.ArticleDto;
+import com.example.article.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
