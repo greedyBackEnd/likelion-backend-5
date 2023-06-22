@@ -4,6 +4,7 @@ import com.example.article.dto.ArticleDto;
 import com.example.article.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class ArticleController {
     @GetMapping
     public List<ArticleDto> readAll() {
         return service.readArticleAll();
+    }
+
+    // GET /paged (Pagination)
+    @GetMapping("/paged")
+    public Page<ArticleDto> readAllPaged(
+            @RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+        return service.readArticlePaged(pageNumber, pageSize);
     }
 
     // GET /articles/{id}
