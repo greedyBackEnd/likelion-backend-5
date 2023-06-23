@@ -3,6 +3,7 @@ package com.example.contents;
 import com.example.contents.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,13 +41,25 @@ public class UserController {
 
     // PUT /users/{id}/avatar
     // 사용자 프로필 이미지 설정
-    @PutMapping("/{id}/avatar")
+    @PutMapping(
+            value = "/{id}/avatar",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public UserDto avatar(
             @PathVariable("id") Long id,
             @RequestParam("image") MultipartFile avatarImage
     ) {
         return service.updateUserAvatar(id, avatarImage);
     }
+
+    // ExceptionHandler: Controller 내부에서 지정된 예외가 발생했을 때, 실행하는 메서드에 붙이는 어노테이션
+//    @ExceptionHandler(IllegalStateException.class)
+//    public ResponseDto handleIllegalState(IllegalStateException exception) {
+//        log.error(exception.getMessage());
+//        ResponseDto response = new ResponseDto();
+//        response.setMessage("에러 발생 이유입니다.");
+//        return response;
+//    }
 }
 
 
