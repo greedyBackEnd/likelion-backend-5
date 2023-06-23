@@ -14,21 +14,21 @@ public class UserController {
 
     private final UserService service;
 
-    // POST /user
+    // POST /users
     // 새 사용자 생성
     @PostMapping
     public UserDto create(@RequestBody UserDto userDto) {
         return service.createUser(userDto);
     }
 
-    // GET /user/{username}
+    // GET /users/{username}
     // 사용자 정보 조회
     @GetMapping("/{username}")
     public UserDto read(@PathVariable("username") String username) {
         return service.readUserByUsername(username);
     }
 
-    // PUT /user/{id}
+    // PUT /users/{id}
     // 사용자 정보 수정
     @PutMapping("/{id}")
     public UserDto update(
@@ -38,7 +38,7 @@ public class UserController {
         return service.updateUser(id, userDto);
     }
 
-    // PUT /user/{id}/avatar
+    // PUT /users/{id}/avatar
     // 사용자 프로필 이미지 설정
     @PutMapping("/{id}/avatar")
     public UserDto avatar(
