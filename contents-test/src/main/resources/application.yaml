@@ -1,9 +1,11 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: password
+  profiles:
+    default: test   # application-test.yaml 을 기본으로 사용
+#    datasource:
+#    url: jdbc:h2:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password: password
   jpa:
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
@@ -18,3 +20,8 @@ spring:
     resources:
       # 정적 파일 탐색 장소
       static-locations: file:media/,classpath:/static
+
+logging:
+  level:
+    root: info
+  config: file:logback-spring.xml
