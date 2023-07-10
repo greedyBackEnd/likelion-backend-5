@@ -8,6 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+<<<<<<< HEAD
+
+import static org.junit.jupiter.api.Assertions.*;
+=======
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,34 +22,58 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
+>>>>>>> origin/canary
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
+<<<<<<< HEAD
+
+    @Mock   // repository의 method는 있지만 정상 작동 X
+=======
     @Mock
+>>>>>>> origin/canary
     private UserRepository userRepository;
 
     @InjectMocks
     private UserService userService;
 
+<<<<<<< HEAD
+    // UserDto를 입력받아 UserDto(id != null)를 반환
+=======
     // UserDto(id==null)를 입력받아 UserDto(id!=null)를 반환
+>>>>>>> origin/canary
     @Test
     @DisplayName("UserDto로 createUser")
     public void testCreateUser() {
         // given
+<<<<<<< HEAD
+        // 1. UserRepository가 전달받을 UserEntity 정의
+        String username = "kim";
+        UserEntity userEntityIn = new UserEntity();
+        userEntityIn.setUsername(username);
+
+        // 2. UserRepository가 반환할 UserEntity 정의
+=======
         // 1. UserRepository 가 전달받을 UserEntity 정의
         String username = "jeeho.dev";
         UserEntity userEntityIn = new UserEntity();
         userEntityIn.setUsername(username);
 
         // 2. UserRepository 가 반환할 UserEntity 정의
+>>>>>>> origin/canary
         Long userId = 1L;
         UserEntity userEntityOut = new UserEntity();
         userEntityOut.setId(userId);
         userEntityOut.setUsername(username);
 
+<<<<<<< HEAD
+        // 3. UserRepository.save()의 기능을 따라하도록 설정
+        // userRepository는 아래와 같이 기능할 것이라고 가정
+=======
         // 3. UserRepository의 기능을 따라하도록 설정
         // userRepository는 아래와 같이 기능할것이다 라고 가정
+>>>>>>> origin/canary
         when(userRepository.save(userEntityIn))
                 .thenReturn(userEntityOut);
         when(userRepository.existsByUsername(username))
@@ -60,6 +88,8 @@ public class UserServiceTests {
         assertEquals(userId, result.getId());
         assertEquals(username, result.getUsername());
     }
+<<<<<<< HEAD
+=======
 
     @Test
     @DisplayName("username으로 UserDto 반환")
@@ -134,4 +164,5 @@ public class UserServiceTests {
         assertEquals(userId, userDto.getId());
         assertEquals(String.format("/static/%d/profile.png", userId), userDto.getAvatar());
     }
+>>>>>>> origin/canary
 }

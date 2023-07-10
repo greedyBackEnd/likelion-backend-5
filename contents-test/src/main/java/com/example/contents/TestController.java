@@ -2,6 +2,8 @@ package com.example.contents;
 
 import com.example.contents.dto.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,9 +12,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@Slf4j
+//@Slf4j
 @RestController
 public class TestController {
+
+    private static final Logger log = LoggerFactory.getLogger(TestController.class);
+
+    @GetMapping("/log")
+    public void logTest() {
+        log.trace("A TRACE message");
+        log.debug("A DEBUG message");
+        log.info("A INFO message");
+        log.warn("A WARN message");
+        log.error("A ERROR message");
+    }
 
     @PostMapping(
             value = "/multipart",
