@@ -1,6 +1,8 @@
 package com.example.auth.config;
 
 import com.example.auth.jwt.JwtTokenFilter;
+import com.example.auth.oauth.OAuth2SuccessHandler;
+import com.example.auth.oauth.OAuth2UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,9 +16,13 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 @Configuration
 public class WebSecurityConfig {
     private final JwtTokenFilter jwtTokenFilter;
+    private final OAuth2UserServiceImpl oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
-    public WebSecurityConfig(JwtTokenFilter jwtTokenFilter) {
+    public WebSecurityConfig(JwtTokenFilter jwtTokenFilter, OAuth2UserServiceImpl oAuth2UserService, OAuth2SuccessHandler oAuth2SuccessHandler) {
         this.jwtTokenFilter = jwtTokenFilter;
+        this.oAuth2UserService = oAuth2UserService;
+        this.oAuth2SuccessHandler = oAuth2SuccessHandler;
     }
 
     @Bean
@@ -30,6 +36,12 @@ public class WebSecurityConfig {
                         .requestMatchers("/token/**", "/views/**")
                         .permitAll()
                 )
+                .oauth2Login(oauth2Http -> oauth2Http
+                        .loginPage("/view/login")
+                        .successHandler(oAuth2SuccessHandler)
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(oAuth2UserService))
+                )
                 .sessionManagement(
                         sessionManagement -> sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -38,9 +50,9 @@ public class WebSecurityConfig {
 
         return http.build();
     }
-    @Bean
-    // 비밀번호 암호화를 위한 Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    // 비밀번호 암호화를 위한 Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 }
