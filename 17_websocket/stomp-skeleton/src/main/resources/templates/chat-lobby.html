@@ -37,6 +37,9 @@
     const roomName = document.getElementById("room-name").value;
     const response = await (await fetch(`/chat/rooms`, {
       method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
       body: JSON.stringify({
         roomName
       })

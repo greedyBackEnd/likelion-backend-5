@@ -58,7 +58,10 @@
     event.preventDefault()
     const messageInput = document.getElementById('message');
     const message = messageInput.value
-    stompClient.send("/app/chat", {},
+    stompClient.send("/app/chat",
+            {
+              "Authorization": "Bearer Token_here"
+            },
       JSON.stringify({
         'roomId': roomId,
         'sender': nickname,
