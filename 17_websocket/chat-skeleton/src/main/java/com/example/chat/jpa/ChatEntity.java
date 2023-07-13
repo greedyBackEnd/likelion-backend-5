@@ -11,8 +11,6 @@ public class ChatEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String to;
-    private String from;
-
+    private String sender;
     private String content;
 }
