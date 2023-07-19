@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 import java.time.Instant;
 import java.util.UUID;
 
+<<<<<<< HEAD
 @Component
 @Slf4j
 public class LoggingFilter implements GlobalFilter {
@@ -45,5 +46,25 @@ public class LoggingFilter implements GlobalFilter {
 
         // filterChain.goFilter() 대신
         return chain.filter(exchange);
+=======
+@Slf4j
+@Component
+// Header 조작 없이 바로 기록하는 필터
+public class LoggingFilter implements GlobalFilter {
+    @Override
+    public Mono<Void> filter(
+            ServerWebExchange exchange,
+            GatewayFilterChain chain
+    ) {
+        String path = exchange.getRequest().getPath().toString();
+        log.trace("Executed filter in PreLoggingFilter");
+        long timeStart = Instant.now().toEpochMilli();
+
+        return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+
+            log.info("Execution Time Path: {}, timediff(ms): {}",
+                    path, Instant.now().toEpochMilli() - timeStart);
+        }));
+>>>>>>> origin/canary
     }
 }
