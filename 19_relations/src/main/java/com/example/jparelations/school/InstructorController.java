@@ -5,6 +5,7 @@ import com.example.jparelations.school.dto.LectureDto;
 import com.example.jparelations.school.entity.Instructor;
 import com.example.jparelations.school.entity.Lecture;
 import com.example.jparelations.school.repo.InstructorRepository;
+import com.example.jparelations.school.repo.InstructorRepositorySupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class InstructorController {
     private final InstructorRepository instructorRepository;
+    private final InstructorRepositorySupport instructorRepositorySupport;
+
+    @GetMapping("test")
+    public void test() {
+        List<Instructor> instructors = instructorRepositorySupport.findByFirstName("jeeho");
+        for (Instructor instructor : instructors) {
+            log.info(instructor.getLastName());
+        }
+    }
 
     @PostMapping
     public InstructorDto createInstructor(

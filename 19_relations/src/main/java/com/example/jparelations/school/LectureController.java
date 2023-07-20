@@ -8,6 +8,7 @@ import com.example.jparelations.school.dto.LectureDto;
 import com.example.jparelations.school.entity.Instructor;
 import com.example.jparelations.school.entity.Lecture;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("lectures")
 @RequiredArgsConstructor
@@ -23,6 +25,13 @@ public class LectureController {
     private final LectureRepository lectureRepository;
     private final InstructorRepository instructorRepository;
 
+    @GetMapping("test")
+    public void test() {
+        List<Lecture> lectures = lectureRepository.lectureByTime("tue", null, null);
+        for (Lecture lecture : lectures) {
+            log.info(lecture.getName());
+        }
+    }
 
     @PostMapping
     public LectureDto createLecture(
@@ -35,7 +44,7 @@ public class LectureController {
     @GetMapping
     public List<LectureDto> readLectureAll() {
         List<LectureDto> lectureList = new ArrayList<>();
-        for (Lecture lecture: lectureRepository.findAll())
+        for (Lecture lecture : lectureRepository.findAll())
             lectureList.add(LectureDto.fromEntity(lecture));
         return lectureList;
     }
@@ -46,7 +55,7 @@ public class LectureController {
                 = lectureRepository.findById(id);
         if (optionalLecture.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        
+
         return LectureDto.fromEntity(optionalLecture.get());
     }
 

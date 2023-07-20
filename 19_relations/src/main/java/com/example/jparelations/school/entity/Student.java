@@ -16,7 +16,9 @@ public class Student {
     private String lastName;
 
     @ManyToMany
-    @JoinTable(name = "attending_lectures")
+    @JoinTable(name = "enrolling_lectures",
+            joinColumns = @JoinColumn(name = "studnet_id"),
+            inverseJoinColumns = @JoinColumn(name = "lecture_id"))
     private List<Lecture> attending;
 
     @ManyToOne
